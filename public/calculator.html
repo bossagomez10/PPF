@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPF Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href='/'">PPF Calculator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Iniciar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+          <div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">PPF Calculator</h5>
+        </div>
+        
+        <div class="card-body p-4">
+            <!-- Formulario -->
+            <form id="calculatorForm">
+                <div class="row g-4">
+                    <!-- Medidas -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Ancho (metros)</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="width" step="0.01" required>
+                            <span class="input-group-text">m</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Alto (metros)</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="height" step="0.01" required>
+                            <span class="input-group-text">m</span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Horas de Instalación</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="installationHours" required>
+                            <span class="input-group-text">hrs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        Calcular Precio
+                    </button>
+                </div>
+            </form>
+
+            <!-- Resultados -->
+            <div id="results" class="d-none mt-4">
+                <div class="row g-4">
+                    <!-- Métricas -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0">Métricas</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <th>Metros lineales:</th>
+                                                <td class="text-end" id="linearMeters">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Conversión a metros cuadrados:</th>
+                                                <td class="text-end" id="squareMeters">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Metros cuadrados que utilizaré:</th>
+                                                <td class="text-end" id="areaUsed">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Aprovechamiento:</th>
+                                                <td class="text-end" id="utilization">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Valor de aprovechamiento:</th>
+                                                <td class="text-end" id="utilizationValue">-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Desglose de Costos -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0">Desglose de Costos</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <th>Costo material:</th>
+                                                <td class="text-end" id="materialPrice">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Riesgo (10%):</th>
+                                                <td class="text-end" id="risk">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Mano de obra:</th>
+                                                <td class="text-end" id="labor">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Aproximación:</th>
+                                                <td class="text-end" id="approximation">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Descuento por aprovechamiento:</th>
+                                                <td class="text-end" id="discountOnUtilization">-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Totales -->
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <div class="fs-6 text-muted mb-1">total Plantilla Sin Instalar</div>
+                                            <div class="fs-4 fw-bold" id="totalPlantillaSinInstalar">-</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <div class="text-center">
+                                            <div class="fs-6 text-muted mb-1">Precio Instalada</div>
+                                            <div class="fs-4 fw-bold" id="totalPlantillaInstalada">-</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <div class="fs-6 text-muted mb-1">Precio sugerido</div>
+                                            <div class="fs-4 fw-bold" id="suggestedPrice">-</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                        
+    <!-- Modal de Login -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Iniciar Sesión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/mongodb@5.2.0/dist/index.min.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>
